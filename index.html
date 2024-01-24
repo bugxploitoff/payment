@@ -9,21 +9,31 @@
 
   <h1>Order Page with API Callback</h1>
 
+  <label for="pidInput">Enter PID:</label>
+  <input type="text" id="pidInput" placeholder="Enter pid">
   <button id="generateOrderBtn" onclick="generateOrder()">Generate Order</button>
 
   <script>
     function generateOrder() {
+      // Get the pid value from the input field
+      var pidInput = document.getElementById("pidInput").value;
+
+      // Check if pid is provided
+      if (!pidInput) {
+        alert("Please enter a valid PID.");
+        return;
+      }
+
       // Generate a random order ID (you can customize the logic as needed)
       var randomOrderID = Math.floor(Math.random() * 1000000);
 
-      // Construct the URL with the generated order ID
-      var paymentURL = "https://sbt-bank.vercel.app/web/payment?pid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNuYXRoMjk3M0BnbWFpbC5jb20iLCJhbW91bnQiOiIxMDAiLCJ3YWxsZXRpZCI6IjB4MjI4ODZDMTcxMDY1RjE5NzFDRTNFMzg0ODEzMDA4REQ2MTdmNEZjRSIsIm1lcmNoYW50IjoiMHg4QjE1ZjkyMTQ2NTM5M2EwMGQ1MDY0RDc3YzI2MzkxMzA1ZjRkNTdBIiwiY2FsbGJhY2siOiJodHRwOi8vMTI3LjAuMC4xOjU1MDAvcmVzcG9uc2UuaHRtbCIsImlhdCI6MTcwNjEwNTU1Mn0.ASbSmt2JE9zxkMaMEHD3bBF5XzLwlnyJOLOFe-LTZBk&orderid=" + randomOrderID + "&invoice_url=https://gppglr.com";
+      // Construct the URL with the generated order ID and provided pid
+      var paymentURL = "https://sbt-bank.vercel.app/web/payment?pid=" + pidInput + "&orderid=" + randomOrderID + "&invoice_url=https://gppglr.com";
 
       // Open the payment URL in a new tab or window
       window.open(paymentURL, '_blank');
     }
   </script>
-
 
 </body>
 </html>
