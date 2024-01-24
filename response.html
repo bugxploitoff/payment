@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment callback</title>
+</head>
+<body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the order ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('orderid');
+
+    // Check if the order ID is available
+    if (orderId) {
+      // Prepare the data object
+      const postData = {
+        email: "snath2973@gmail.com",
+        orderid: orderId
+      };
+
+      // Make the API request using fetch
+      fetch('https://sbt-bank.vercel.app/api/web/callback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('API Response:', data);
+        
+        // Display the API response in a popup
+        alert('API Response:\n' + JSON.stringify(data, null, 2));
+        
+        // Alternatively, you can use a modal or update the HTML content dynamically
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle errors
+        alert('Error occurred. Please check the console for details.');
+      });
+    } else {
+      console.error('Order ID not found in the URL.');
+      // Handle the case when order ID is not available
+      alert('Order ID not found in the URL.');
+    }
+  });
+</script>
+
+</body>
+</html>
